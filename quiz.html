@@ -7,14 +7,19 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
 <title>DigiKit Quiz</title>
-<script src="tracking-config.js"></script>
+<script defer src="tracking-config.js"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5SXNTQXJ');
 </script>
-<script src="tracking.js"></script>
+<script defer src="tracking.js"></script>
+<link as="image" fetchpriority="high" href="logo.svg" rel="preload"/>
+<link as="image" href="img/age_18_35.svg" rel="preload"/>
+<link as="image" href="img/age_36_45.svg" rel="preload"/>
+<link as="image" href="img/age_46_55.svg" rel="preload"/>
+<link as="image" href="img/age_55_plus.svg" rel="preload"/>
 <link href="styles.css" rel="stylesheet"/>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
 <style>
 /* ===== LOGO HEADER ===== */
 .logo-header{display:flex;align-items:center;justify-content:center;padding:12px 20px;background:#fff;border-bottom:1px solid rgba(0,0,0,.05)}
@@ -124,7 +129,7 @@ window.dataLayer = window.dataLayer || [];
 <body>
 
 <div class="app-container" id="app">
-<div class="logo-header"><img alt="DigiKit" fetchpriority="high" block'" src="logo.svg"/><span style="display:none;font-size:18px;font-weight:800;color:var(--pink)">DIGIKIT</span></div>
+<div class="logo-header"><img decoding="async" alt="DigiKit" fetchpriority="high" block'" src="logo.svg"/><span style="display:none;font-size:18px;font-weight:800;color:var(--pink)">DIGIKIT</span></div>
 <div class="top-bar" id="topBar">
 <button class="back-btn" id="backBtn" onclick="goBack()">←</button>
 <span class="section-title" id="sectionTitle">Meu Perfil</span>
@@ -208,7 +213,7 @@ function buildQuestion(s){
     if(s.imgFallback){
       onerror = "if(this.dataset.fallback){this.onerror=null;this.src=this.dataset.fallback}else{this.style.display='none'}";
     }
-    h += '<img class="question-image" src="'+s.img+'" alt=""'+(s.imgFallback?' data-fallback="'+s.imgFallback+'"':'')+' onerror="'+onerror+'">';
+    h += '<img loading="lazy" decoding="async" class="question-image" src="'+s.img+'" alt=""'+(s.imgFallback?' data-fallback="'+s.imgFallback+'"':'')+' onerror="'+onerror+'">';
   }
   h += '<h2 class="question-title">'+s.title+'</h2>';
   if(s.subtitle) h += '<p class="question-subtitle">'+s.subtitle+'</p>';
@@ -235,7 +240,7 @@ function buildPhotoGrid(s){
       : 'pickPhotoOne(\''+s.id+'\',\''+o.value+'\')';
     h += '<div class="photo-card" onclick="'+fn+'">';
     const imgSrc = o.img ? (o.img.includes('?') ? o.img : o.img + '?v=2') : fallbackSvg;
-    h += '<img src="'+imgSrc+'" alt="'+o.text+'" onerror="this.onerror=null;this.src=\''+fallbackSvg+'\';">';
+    h += '<img loading="lazy" decoding="async" src="'+imgSrc+'" alt="'+o.text+'" onerror="this.onerror=null;this.src=\''+fallbackSvg+'\';">';
     h += '<div class="card-check">'+(isMulti?'☐':'○')+'</div>';
     h += '<div class="card-label">'+o.text+'</div>';
     h += '</div>';
@@ -281,7 +286,7 @@ function buildInfo(s){
     if(s.imgFallback){
       onerror = "if(this.dataset.fallback){this.onerror=null;this.src=this.dataset.fallback}else{this.style.display='none'}";
     }
-    h += '<img src="'+s.img+'" alt="" style="'+style+'"'+(s.imgFallback?' data-fallback="'+s.imgFallback+'"':'')+' onerror="'+onerror+'">';
+    h += '<img loading="lazy" decoding="async" src="'+s.img+'" alt="" style="'+style+'"'+(s.imgFallback?' data-fallback="'+s.imgFallback+'"':'')+' onerror="'+onerror+'">';
   }
 
   if(s.icon) h += '<div class="info-icon">'+s.icon+'</div>';
@@ -302,7 +307,7 @@ function buildSocial(s){
     if(s.imgFallback){
       onerror = "if(this.dataset.fallback){this.onerror=null;this.src=this.dataset.fallback}else{this.style.display='none'}";
     }
-    h += '<img class="hero-img" src="'+s.img+'" alt=""'+(s.imgFallback?' data-fallback="'+s.imgFallback+'"':'')+' onerror="'+onerror+'">';
+    h += '<img decoding="async" class="hero-img" src="'+s.img+'" alt=""'+(s.imgFallback?' data-fallback="'+s.imgFallback+'"':'')+' onerror="'+onerror+'">';
   }
   if(s.badge) h += '<div class="social-badge">'+s.badge+'</div>';
   h += '<h2>'+s.title+'</h2>';
@@ -315,7 +320,7 @@ function buildSocial(s){
 function buildExercise(s){
   let h = '<p class="exercise-top-label">Gosta ou não gosta?</p>';
   h += '<div class="exercise-card">';
-  h += '<img src="'+s.img+'" alt="'+s.title+'" onerror="this.style.display=\'none\'">';
+  h += '<img loading="lazy" decoding="async" src="'+s.img+'" alt="'+s.title+'" onerror="this.style.display=\'none\'">';
   h += '<div class="exercise-card-title">'+s.title+'</div>';
   if(s.subtitle) h += '<div class="exercise-card-sub">'+s.subtitle+'</div>';
   h += '</div>';
