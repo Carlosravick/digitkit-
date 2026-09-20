@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<!-- UTMify: Captura de UTMs para rastreamento de ROI -->
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>DigiKit Quiz</title>
+<script src="tracking-config.js"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5SXNTQXJ');
+</script>
+<script src="tracking.js"></script>
+<link href="styles.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
+<style>
+/* ===== LOGO HEADER ===== */
+.logo-header{display:flex;align-items:center;justify-content:center;padding:12px 20px;background:#fff;border-bottom:1px solid rgba(0,0,0,.05)}
+.logo-header img{height:72px;width:auto;max-width:240px;object-fit:contain}
+
+/* ===== INPUT SCREEN FIX — width 100% everywhere ===== */
+.screen .input-group{width:100%;margin:20px 0}
+.screen .input-field{width:100%;box-sizing:border-box}
+.screen .unit-toggle{display:flex;justify-content:center;margin-bottom:16px}
+
+/* ===== IMC STYLES ===== */
+.imc-container{margin:20px 0}
+.imc-bar{display:flex;height:28px;border-radius:14px;overflow:hidden;margin:12px 0}
+.imc-seg{flex:1;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
+.imc-pointer-wrap{position:relative;height:44px;margin-top:-6px}
+.imc-pointer{position:absolute;top:0;transform:translateX(-50%);text-align:center;transition:left 1.5s cubic-bezier(.34,1.2,.64,1)}
+.imc-pointer .arrow{font-size:20px}
+.imc-pointer .val{font-size:15px;font-weight:800;color:var(--pink)}
+.imc-alert{background:#FFF3CD;border-left:4px solid var(--gold);border-radius:12px;padding:14px;margin:16px 0}
+.imc-alert p{font-size:13px;color:#555;line-height:1.6}
+.imc-alert strong{color:var(--red)}
+
+/* ===== GRAPH ===== */
+.graph-wrap{background:var(--cream);border-radius:20px;padding:16px;margin:16px 0}
+.graph-wrap canvas{max-height:220px}
+.graph-text{font-size:13px;color:#666;line-height:1.6;margin-top:12px;text-align:center}
+.graph-text strong{color:var(--pink)}
+
+/* ===== PHOTO GRID (Q1, Q4, Q5, Q6) ===== */
+.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+.photo-card{background:var(--cream);border:2.5px solid transparent;border-radius:16px;overflow:hidden;cursor:pointer;transition:all 0.25s ease;position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:190px}
+.photo-card img{width:100%;height:165px;min-height:165px;object-fit:cover;object-position:center top;display:block;background:#f8f8f8}
+.photo-card .card-label{padding:10px 8px;font-size:13px;font-weight:600;color:var(--black);text-align:center;background:#fff}
+.photo-card .card-check{position:absolute;top:8px;right:8px;width:24px;height:24px;border-radius:50%;border:2.5px solid rgba(255,255,255,0.8);background:rgba(255,255,255,0.5);display:flex;align-items:center;justify-content:center;font-size:13px;transition:all 0.2s}
+.photo-card:hover{border-color:var(--pink);transform:scale(1.02)}
+.photo-card.selected{border-color:var(--pink);box-shadow:0 0 0 3px rgba(198,43,122,0.15)}
+.photo-card.selected .card-label{color:var(--pink)}
+.photo-card.selected .card-check{background:var(--pink);border-color:var(--pink);color:white}
+.photo-grid-subtitle{font-size:12px;color:var(--gray);text-align:center;margin-top:4px;margin-bottom:4px}
+
+/* ===== SOCIAL PROOF SCREEN ===== */
+.social-screen{text-align:center}
+.social-screen .hero-img{
+  width:100%;
+  height:auto;
+  max-height:260px;
+  object-fit:contain;
+  object-position:center top;
+  border-radius:var(--radius-lg);
+  margin-bottom:16px;
+  background:#f5f0fb;
+  display:block;
+}
+.social-screen .social-badge{display:inline-block;background:linear-gradient(135deg,var(--gold),#f5b942);color:white;font-size:12px;font-weight:700;padding:6px 16px;border-radius:30px;margin-bottom:12px}
+.social-screen h2{font-size:21px;font-weight:800;color:var(--black);margin-bottom:10px}
+.social-screen p{font-size:14px;color:#666;line-height:1.6;margin-bottom:20px}
+.social-screen p strong{color:var(--pink)}
+
+/* ===== IMC LOADING SCREEN ===== */
+.loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:20px}
+.loading-screen h2{font-size:20px;font-weight:800;color:var(--black);margin-bottom:8px}
+.loading-screen p{font-size:13px;color:var(--gray);margin-bottom:32px}
+.loading-steps{width:100%;max-width:320px}
+.loading-step{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--gray-light);opacity:0;animation:stepFadeIn 0.5s ease forwards}
+.loading-step .step-icon{width:32px;height:32px;border-radius:50%;background:var(--pink-light);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.loading-step .step-text{font-size:13px;font-weight:500;color:var(--black);text-align:left}
+.loading-step .step-check{margin-left:auto;color:var(--green);font-size:16px;opacity:0;transition:opacity 0.3s}
+.loading-step.done .step-check{opacity:1}
+.loading-step.done .step-icon{background:rgba(61,153,112,0.1)}
+.loading-progress{width:100%;max-width:320px;height:6px;background:var(--gray-light);border-radius:6px;margin-top:24px;overflow:hidden}
+.loading-progress-fill{height:100%;background:linear-gradient(90deg,var(--pink),#e055a0);border-radius:6px;width:0%;transition:width 0.4s ease}
+@keyframes stepFadeIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+.loading-step:nth-child(1){animation-delay:0.3s}
+.loading-step:nth-child(2){animation-delay:0.9s}
+.loading-step:nth-child(3){animation-delay:1.5s}
+.loading-step:nth-child(4){animation-delay:2.1s}
+
+/* ===== SAFETY MODAL ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn 0.3s ease}
+.modal-box{background:white;border-radius:24px;padding:28px 24px;max-width:360px;width:100%;text-align:center;animation:slideUp 0.3s ease}
+.modal-box h3{font-size:19px;font-weight:800;color:var(--black);margin:12px 0 10px}
+.modal-box p{font-size:13px;color:#666;line-height:1.6;margin-bottom:20px}
+.modal-icon{font-size:40px;display:block;margin-bottom:4px}
+
+/* ===== CORTISOL CHART ===== */
+.cortisol-chart-wrap{background:var(--cream);border-radius:16px;padding:14px;margin:16px 0}
+.cortisol-chart-wrap canvas{max-height:160px}
+
+/* ===== INFO SCREEN — WITH CHECKLIST ===== */
+.info-checklist{background:var(--cream);border-radius:14px;padding:14px;margin:16px 0;text-align:left}
+.info-check-item{display:flex;align-items:flex-start;gap:10px;padding:7px 0;font-size:13px;color:#555;line-height:1.5}
+.info-check-item .chk{color:var(--pink);font-weight:700;flex-shrink:0;margin-top:1px}
+
+/* ===== EXERCISE (revisited) ===== */
+.exercise-card{border-radius:20px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:16px;background:#fff}
+.exercise-card img{width:100%;height:auto;max-height:280px;object-fit:contain;display:block;background:#f8f5f2}
+.exercise-card-title{font-size:16px;font-weight:700;text-align:center;padding:14px 16px 4px;color:var(--black)}
+.exercise-card-sub{font-size:13px;color:var(--gray);text-align:center;padding:0 16px 16px}
+.exercise-top-label{font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:8px}
+.rating-btns-row{display:flex;gap:10px;width:100%}
+.rating-btn-v2{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 8px;border:2px solid var(--gray-light);border-radius:14px;background:var(--white);font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;color:var(--black);cursor:pointer;transition:all 0.2s}
+.rating-btn-v2 .rb-emoji{font-size:22px}
+.rating-btn-v2:hover{border-color:var(--pink);background:var(--pink-light)}
+.rating-btn-v2.selected{border-color:var(--pink);background:var(--pink);color:white}
+</style>
+</head>
+<body>
+
+<div class="app-container" id="app">
+<div class="logo-header"><img alt="DigiKit" fetchpriority="high" onerror="this.style.display='none';this.nextSibling.style.display='block'" src="logo.webp"/><span style="display:none;font-size:18px;font-weight:800;color:var(--pink)">DIGIKIT</span></div>
+<div class="top-bar" id="topBar">
+<button class="back-btn" id="backBtn" onclick="goBack()">←</button>
+<span class="section-title" id="sectionTitle">Meu Perfil</span>
+<span class="progress-pct" id="pctLabel">2%</span>
+</div>
+<div class="progress-bar-wrapper"><div class="progress-bar-fill" id="progressFill" style="width:2%"></div></div>
+<div id="screenArea"></div>
+</div>
+<!-- Safety Modal -->
+<div class="modal-overlay" id="safetyModal" style="display:none">
+<div class="modal-box">
+<span class="modal-icon">🛡️</span>
+<h3>Dar prioridade à sua saúde e segurança</h3>
+<p>Se você tiver alguma condição de saúde, fale com seu médico antes de começar qualquer programa de exercícios, para se certificar de que é adequado para você.</p>
+<button class="cta-btn" onclick="closeModal()">Continuar</button>
+</div>
+</div>
+<script src="quiz-data.js"></script>
+<script>
+const answers = {};
+let idx = 0;
+let multiSel = {};
+let loadingDone = false;
+
+function save(key, val){ answers[key] = val; }
+
+function render(){
+  const s = QUIZ_DATA[idx];
+  if(!s) return finish();
+
+  document.getElementById('pctLabel').textContent = s.progress+'%';
+  document.getElementById('progressFill').style.width = s.progress+'%';
+  document.getElementById('backBtn').style.visibility = idx>0?'visible':'hidden';
+  document.getElementById('sectionTitle').textContent = s.section || 'Método DigiKit';
+
+  multiSel = {};
+  let h = '';
+
+  if     (s.type==='question')    h = buildQuestion(s);
+  else if(s.type==='photo-grid')  h = buildPhotoGrid(s);
+  else if(s.type==='multi')       h = buildMulti(s);
+  else if(s.type==='input')       h = buildInput(s);
+  else if(s.type==='info')        h = buildInfo(s);
+  else if(s.type==='social')      h = buildSocial(s);
+  else if(s.type==='exercise')    h = buildExercise(s);
+  else if(s.type==='imc-loading') h = buildIMCLoading(s);
+  else if(s.type==='imc')         h = buildIMC(s);
+  else if(s.type==='graph')       h = buildGraph(s);
+
+  document.getElementById('screenArea').innerHTML = '<div class="screen active">'+h+'</div>';
+  window.scrollTo(0,0);
+
+  if (window.digikitTracking) {
+    if (idx === 0) {
+      window.digikitTracking.track('quiz_start', {
+        quiz_name: 'digikit_main_quiz'
+      });
+    }
+    window.digikitTracking.track('quiz_step_view', {
+      quiz_name: 'digikit_main_quiz',
+      quiz_step_id: s.id,
+      quiz_step_type: s.type,
+      quiz_step_index: idx + 1,
+      quiz_progress: s.progress
+    });
+  }
+
+  if(s.type==='imc') animateIMC();
+  if(s.type==='graph') drawChart();
+  if(s.type==='imc-loading') runLoadingSequence();
+  if(s.type==='info' && s.chartType==='cortisol') setTimeout(drawCortisolChart, 300);
+}
+
+// ===== BUILDERS =====
+
+function buildQuestion(s){
+  let h = '';
+  if(s.emoji) h += '<div class="question-emoji">'+s.emoji+'</div>';
+  if(s.img){
+    let onerror = "this.style.display='none'";
+    if(s.imgFallback){
+      onerror = "if(this.dataset.fallback){this.onerror=null;this.src=this.dataset.fallback}else{this.style.display='none'}";
+    }
+    h += '<img class="question-image" src="'+s.img+'" alt=""'+(s.imgFallback?' data-fallback="'+s.imgFallback+'"':'')+' onerror="'+onerror+'">';
+  }
+  h += '<h2 class="question-title">'+s.title+'</h2>';
+  if(s.subtitle) h += '<p class="question-subtitle">'+s.subtitle+'</p>';
+  h += '<div class="options-list">';
+  s.options.forEach(o => {
+    h += '<button class="option-btn" onclick="pickOne(\''+s.id+'\',\''+o.value+'\')">';
+    h += '<span>'+(o.emoji?o.emoji+' ':'')+o.text+'</span>';
+    h += '<span class="radio-dot"></span></button>';
+  });
+  h += '</div>';
+  return h;
+}
+
+function buildPhotoGrid(s){
+  const isMulti = s.select === 'multi';
+  const fallbackSvg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'><rect width='300' height='200' fill='%23FDF0F7' rx='16'/><circle cx='150' cy='75' r='40' fill='white'/><circle cx='150' cy='75' r='20' fill='%23C62B7A' opacity='0.3'/><circle cx='150' cy='75' r='10' fill='%23C62B7A'/></svg>";
+
+  let h = '<h2 class="question-title">'+s.title+'</h2>';
+  if(s.subtitle) h += '<p class="question-subtitle photo-grid-subtitle">'+s.subtitle+'</p>';
+  h += '<div class="photo-grid">';
+  s.options.forEach(o => {
+    const fn = isMulti
+      ? 'togglePhoto(this,\''+s.id+'\',\''+o.value+'\')'
+      : 'pickPhotoOne(\''+s.id+'\',\''+o.value+'\')';
+    h += '<div class="photo-card" onclick="'+fn+'">';
+    const imgSrc = o.img ? (o.img.includes('?') ? o.img : o.img + '?v=2') : fallbackSvg;
+    h += '<img src="'+imgSrc+'" alt="'+o.text+'" onerror="this.onerror=null;this.src=\''+fallbackSvg+'\';">';
+    h += '<div class="card-check">'+(isMulti?'☐':'○')+'</div>';
+    h += '<div class="card-label">'+o.text+'</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+  if(isMulti){
+    h += '<div class="cta-fixed"><button class="cta-btn" id="photoCta" onclick="submitPhotoMulti(\''+s.id+'\')" disabled>Continuar →</button></div>';
+  }
+  return h;
+}
+
+function buildMulti(s){
+  let h = '<h2 class="question-title">'+s.title+'</h2>';
+  if(s.subtitle) h += '<p class="question-subtitle">'+s.subtitle+'</p>';
+  h += '<div class="options-list" id="multiList">';
+  s.options.forEach(o => {
+    h += '<button class="option-btn" data-val="'+o.value+'" onclick="toggleMulti(this,\''+o.value+'\')">';
+    h += '<span>'+(o.emoji?o.emoji+' ':'')+o.text+'</span>';
+    h += '<span class="check-box"></span></button>';
+  });
+  h += '</div>';
+  h += '<div class="cta-fixed"><button class="cta-btn" id="multiCta" onclick="submitMulti(\''+s.id+'\')" disabled>Continuar →</button></div>';
+  return h;
+}
+
+function buildInput(s){
+  let h = '<h2 class="question-title">'+s.title+'</h2>';
+  h += '<div style="width:100%;margin:0 auto">';
+  h += '<div class="unit-toggle"><button class="unit-btn active">'+s.unit.toUpperCase()+'</button></div>';
+  h += '<div class="input-group" style="width:100%;margin:16px 0">';
+  h += '<input type="number" class="input-field" id="inputVal" placeholder="'+s.placeholder+'" min="'+s.min+'" max="'+s.max+'" inputmode="numeric" style="width:100%;box-sizing:border-box">';
+  h += '</div>';
+  h += '</div>';
+  h += '<button class="cta-btn" id="inputCta" onclick="submitInput(\''+s.id+'\',\''+s.inputType+'\')" disabled style="margin-top:8px">Continuar →</button>';
+  return h;
+}
+
+function buildInfo(s){
+  let h = '<div class="info-screen">';
+  if(s.img){
+    let style = s.imgStyle || "width:100%;max-height:220px;object-fit:cover;border-radius:16px;margin-bottom:16px;display:block";
+    let onerror = "this.style.display='none'";
+    if(s.imgFallback){
+      onerror = "if(this.dataset.fallback){this.onerror=null;this.src=this.dataset.fallback}else{this.style.display='none'}";
+    }
+    h += '<img src="'+s.img+'" alt="" style="'+style+'"'+(s.imgFallback?' data-fallback="'+s.imgFallback+'"':'')+' onerror="'+onerror+'">';
+  }
+
+  if(s.icon) h += '<div class="info-icon">'+s.icon+'</div>';
+  h += '<h2 class="info-title">'+s.title+'</h2>';
+  h += '<div class="info-text">'+s.text.replace(/\n/g,'<br>')+'</div>';
+  if(s.chartType==='cortisol'){
+    h += '<div class="cortisol-chart-wrap"><canvas id="cortisolChart" height="140"></canvas></div>';
+  }
+  h += '<button class="cta-btn" onclick="next()">'+(s.btn||'Continuar →')+'</button>';
+  h += '</div>';
+  return h;
+}
+
+function buildSocial(s){
+  let h = '<div class="social-screen">';
+  if(s.img){
+    let onerror = "this.style.display='none'";
+    if(s.imgFallback){
+      onerror = "if(this.dataset.fallback){this.onerror=null;this.src=this.dataset.fallback}else{this.style.display='none'}";
+    }
+    h += '<img class="hero-img" src="'+s.img+'" alt=""'+(s.imgFallback?' data-fallback="'+s.imgFallback+'"':'')+' onerror="'+onerror+'">';
+  }
+  if(s.badge) h += '<div class="social-badge">'+s.badge+'</div>';
+  h += '<h2>'+s.title+'</h2>';
+  h += '<p>'+s.text+'</p>';
+  h += '<button class="cta-btn" onclick="next()">'+(s.btn||'Continuar →')+'</button>';
+  h += '</div>';
+  return h;
+}
+
+function buildExercise(s){
+  let h = '<p class="exercise-top-label">Gosta ou não gosta?</p>';
+  h += '<div class="exercise-card">';
+  h += '<img src="'+s.img+'" alt="'+s.title+'" onerror="this.style.display=\'none\'">';
+  h += '<div class="exercise-card-title">'+s.title+'</div>';
+  if(s.subtitle) h += '<div class="exercise-card-sub">'+s.subtitle+'</div>';
+  h += '</div>';
+  h += '<div class="rating-btns-row">';
+  h += '<button class="rating-btn-v2" onclick="pickExercise(\''+s.id+'\',\'nao\',this)"><span class="rb-emoji">👎</span>Não gosto</button>';
+  h += '<button class="rating-btn-v2" onclick="pickExercise(\''+s.id+'\',\'neutro\',this)"><span class="rb-emoji">😐</span>Neutro</button>';
+  h += '<button class="rating-btn-v2" onclick="pickExercise(\''+s.id+'\',\'gosto\',this)"><span class="rb-emoji">👍</span>Gosto</button>';
+  h += '</div>';
+  return h;
+}
+
+function buildIMCLoading(s){
+  loadingDone = false;
+  let h = '<div class="loading-screen">';
+  h += '<h2>Calculando seu perfil... 🔍</h2>';
+  h += '<p>Analisando seus dados para criar seu plano personalizado</p>';
+  h += '<div class="loading-steps">';
+  h += '<div class="loading-step" id="ls0"><div class="step-icon">📊</div><div class="step-text">Calculando seu IMC</div><span class="step-check">✓</span></div>';
+  h += '<div class="loading-step" id="ls1"><div class="step-icon">🔥</div><div class="step-text">Analisando seu metabolismo</div><span class="step-check">✓</span></div>';
+  h += '<div class="loading-step" id="ls2"><div class="step-icon">🎯</div><div class="step-text">Identificando seu tipo de corpo</div><span class="step-check">✓</span></div>';
+  h += '<div class="loading-step" id="ls3"><div class="step-icon">✅</div><div class="step-text">Montando seu plano DigiKit</div><span class="step-check">✓</span></div>';
+  h += '</div>';
+  h += '<div class="loading-progress"><div class="loading-progress-fill" id="loadingBar"></div></div>';
+  h += '</div>';
+  return h;
+}
+
+function buildIMC(s){
+  const w = answers.weight || 75;
+  const ht = (answers.height || 165) / 100;
+  const imc = (w / (ht*ht)).toFixed(1);
+  answers.imc = parseFloat(imc);
+
+  let cat = '', color = '';
+  if(imc<18.5){ cat='Abaixo do peso'; color='#3498db'; }
+  else if(imc<25){ cat='Normal'; color='var(--green)'; }
+  else if(imc<30){ cat='Sobrepeso'; color='var(--gold)'; }
+  else { cat='Obesidade'; color='var(--red)'; }
+
+  let h = '<h2 class="question-title">'+s.title+'</h2>';
+  h += '<div class="imc-container">';
+  h += '<div class="imc-bar">';
+  h += '<div class="imc-seg" style="background:#3498db">Baixo</div>';
+  h += '<div class="imc-seg" style="background:#2ecc71">Normal</div>';
+  h += '<div class="imc-seg" style="background:#f39c12">Sobre</div>';
+  h += '<div class="imc-seg" style="background:#e74c3c">Obeso</div>';
+  h += '</div>';
+  h += '<div class="imc-pointer-wrap"><div class="imc-pointer" id="imcPointer" style="left:0%">';
+  h += '<div class="arrow">▼</div><div class="val" id="imcVal">0.0</div></div></div>';
+  h += '</div>';
+  h += '<div class="imc-alert"><p><strong>Seu IMC está em '+imc+' — '+cat+'.</strong><br><br>';
+  h += 'Isso significa que o seu corpo pode estar em modo de retenção. ';
+  h += 'A <strong>Ativação Gi</strong> do Método DigiKit foi desenvolvida para "desbloquear" esse modo.</p></div>';
+  h += '<button class="cta-btn" onclick="next()">'+(s.btn||'Ver meu plano →')+'</button>';
+  return h;
+}
+
+function buildGraph(s){
+  const cw = answers.weight || 75;
+  const tw = answers.targetWeight || 65;
+  const diff = cw - tw;
+  let h = '<h2 class="question-title">'+s.title+'</h2>';
+  h += '<div class="graph-wrap"><canvas id="weightChart" height="200"></canvas></div>';
+  h += '<div class="graph-text">Com base no seu perfil, estimamos que você pode perder <strong>'+Math.abs(diff).toFixed(0)+' kg em 12 semanas</strong> praticando o Método DigiKit apenas <strong>10 minutos por dia</strong> — sem academia, sem dieta radical.</div>';
+  h += '<button class="cta-btn" style="margin-top:20px" onclick="next()">'+(s.btn||'Quero esse resultado →')+'</button>';
+  return h;
+}
+
+// ===== HANDLERS =====
+
+function pickOne(id, val){
+  save(id, val);
+  document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+  setTimeout(next, 380);
+}
+
+function pickPhotoOne(id, val){
+  save(id, val);
+  document.querySelectorAll('.photo-card').forEach(c => c.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+  event.currentTarget.querySelector('.card-check').textContent = '✓';
+  setTimeout(next, 420);
+}
+
+function togglePhoto(el, id, val){
+  el.classList.toggle('selected');
+  const chk = el.querySelector('.card-check');
+  if(el.classList.contains('selected')){
+    multiSel[val] = true;
+    chk.textContent = '✓';
+  } else {
+    multiSel[val] = false;
+    chk.textContent = '☐';
+  }
+  const any = Object.values(multiSel).some(v=>v);
+  const cta = document.getElementById('photoCta');
+  if(cta) cta.disabled = !any;
+}
+
+function submitPhotoMulti(id){
+  const vals = Object.keys(multiSel).filter(k=>multiSel[k]);
+  if(vals.length){ save(id, vals); next(); }
+}
+
+function toggleMulti(el, val){
+  el.classList.toggle('selected');
+  multiSel[val] = !multiSel[val];
+  const any = Object.values(multiSel).some(v=>v);
+  document.getElementById('multiCta').disabled = !any;
+}
+
+function submitMulti(id){
+  const s = QUIZ_DATA[idx];
+  const vals = Object.keys(multiSel).filter(k=>multiSel[k]);
+  if(vals.length){
+    save(id, vals);
+    next();
+  }
+}
+
+function closeModal(){
+  document.getElementById('safetyModal').style.display='none';
+  next();
+}
+
+function submitInput(id, inputType){
+  const v = parseFloat(document.getElementById('inputVal').value);
+  if(!v) return;
+  save(id, v);
+  answers[inputType] = v;
+  next();
+}
+
+function pickExercise(id, val, el){
+  save(id, val);
+  document.querySelectorAll('.rating-btn-v2').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  setTimeout(next, 450);
+}
+
+function next(){ idx++; render(); }
+function goBack(){ if(idx>0){ idx--; render(); } }
+function finish(){
+  localStorage.setItem('digikit_answers', JSON.stringify(answers));
+  if (window.digikitTracking) {
+    window.digikitTracking.track('quiz_complete', {
+      quiz_name: 'digikit_main_quiz',
+      answered_steps: Object.keys(answers).length
+    });
+  }
+  setTimeout(function () {
+    var _p = new URLSearchParams(window.location.search);
+    var _co = _p.get('checkout_url');
+    window.location.href = 'name-capture.html' + (_co ? '?checkout_url=' + encodeURIComponent(_co) : '');
+  }, 120);
+}
+// ===== IMC LOADING SEQUENCE =====
+function runLoadingSequence(){
+  const steps = [0,1,2,3];
+  const bar = document.getElementById('loadingBar');
+  const pcts = [25, 50, 75, 100];
+  steps.forEach((i, arrIdx)=>{
+    setTimeout(()=>{
+      const el = document.getElementById('ls'+i);
+      if(el) el.classList.add('done');
+      if(bar) bar.style.width = pcts[arrIdx]+'%';
+      if(arrIdx === steps.length-1){
+        setTimeout(()=>{ idx++; render(); }, 800);
+      }
+    }, 700 + i*700);
+  });
+}
+
+// ===== IMC ANIMATION =====
+function animateIMC(){
+  const imc = answers.imc || 25;
+  let pct = ((imc - 15) / 25) * 100;
+  pct = Math.max(5, Math.min(95, pct));
+  setTimeout(()=>{
+    document.getElementById('imcPointer').style.left = pct+'%';
+    animateCounter(0, imc, 1500);
+  }, 300);
+}
+function animateCounter(start, end, dur){
+  const el = document.getElementById('imcVal');
+  const t0 = performance.now();
+  function tick(t){
+    const p = Math.min((t-t0)/dur, 1);
+    el.textContent = (start+(end-start)*p).toFixed(1);
+    if(p<1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+// ===== WEIGHT CHART =====
+function drawChart(){
+  const cw = answers.weight || 75;
+  const tw = answers.targetWeight || 65;
+  const ctx = document.getElementById('weightChart');
+  if(!ctx) return;
+  const weeks = ['Hoje','Sem 3','Sem 6','Sem 9','Sem 12'];
+  const d = cw - tw;
+  const data = [cw, cw-d*0.25, cw-d*0.5, cw-d*0.75, tw];
+  new Chart(ctx, {
+    type:'line',
+    data:{
+      labels: weeks,
+      datasets:[{
+        data: data,
+        borderColor:'#C62B7A',
+        backgroundColor:'rgba(198,43,122,0.1)',
+        fill:true,
+        tension:0.4,
+        pointRadius:6,
+        pointBackgroundColor:'#C62B7A',
+        borderWidth:3
+      }]
+    },
+    options:{
+      responsive:true,
+      plugins:{legend:{display:false}},
+      scales:{
+        y:{min:tw-3, max:cw+3, ticks:{callback:v=>v+'kg',font:{size:11}}},
+        x:{ticks:{font:{size:11}}}
+      }
+    }
+  });
+}
+
+// ===== CORTISOL CHART =====
+function drawCortisolChart(){
+  const ctx = document.getElementById('cortisolChart');
+  if(!ctx) return;
+  new Chart(ctx,{
+    type:'line',
+    data:{
+      labels:['Sem 1','Sem 2','Sem 3','Sem 4'],
+      datasets:[
+        {label:'Serotonina', data:[20,120,220,300], borderColor:'#3D9970', backgroundColor:'rgba(61,153,112,0.1)', fill:true, tension:0.4, pointRadius:5, borderWidth:2, pointBackgroundColor:'#3D9970'},
+        {label:'Cortisol',   data:[300,200,120,60], borderColor:'#888',    backgroundColor:'rgba(136,136,136,0.1)', fill:true, tension:0.4, pointRadius:5, borderWidth:2, pointBackgroundColor:'#888'}
+      ]
+    },
+    options:{
+      responsive:true,
+      plugins:{legend:{display:true,position:'top',labels:{font:{size:11}}}},
+      scales:{
+        y:{min:0,max:340,display:false},
+        x:{ticks:{font:{size:11}}}
+      }
+    }
+  });
+}
+
+// Input validation
+document.addEventListener('input', e => {
+  if(e.target.id === 'inputVal'){
+    const v = parseFloat(e.target.value);
+    const s = QUIZ_DATA[idx];
+    const valid = v && v >= s.min && v <= s.max;
+    const btn = document.getElementById('inputCta');
+    if(btn) btn.disabled = !valid;
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if(e.key==='Enter' && document.getElementById('inputVal')){
+    const btn = document.getElementById('inputCta');
+    if(btn && !btn.disabled) btn.click();
+  }
+});
+
+// START
+render();
+</script>
+</body>
+</html>

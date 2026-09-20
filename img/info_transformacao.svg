@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220" width="400" height="220">
+    <defs>
+      <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#C62B7A" />
+        <stop offset="100%" stop-color="#A01F63" />
+      </linearGradient>
+      <linearGradient id="softBg" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#FDF0F7" />
+        <stop offset="100%" stop-color="#FAF6F1" />
+      </linearGradient>
+      <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#F5B942" />
+        <stop offset="100%" stop-color="#E8A030" />
+      </linearGradient>
+      <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#4ECDC4" />
+        <stop offset="100%" stop-color="#3D9970" />
+      </linearGradient>
+      <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#C62B7A" flood-opacity="0.15" />
+      </filter>
+    </defs>
+    
+      <rect width="400" height="220" fill="url(#softBg)" rx="20" />
+      <rect x="20" y="20" width="360" height="180" fill="white" rx="16" filter="url(#shadow)" />
+      <!-- Checkmark Circle Vector -->
+      <circle cx="200" cy="70" r="30" fill="#3D9970" />
+      <path d="M 188 70 L 196 78 L 214 60" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="200" y="130" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#3D9970">Perfil 100% Validado!</text>
+      <text x="200" y="155" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#C62B7A">Pronta para o Método DigiKit</text>
+    
+  </svg>

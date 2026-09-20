@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<!-- UTMify: Captura de UTMs para rastreamento de ROI -->
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Último Passo — Método DigiKit</title>
+<script src="tracking-config.js"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5SXNTQXJ');
+</script>
+<script src="tracking.js"></script>
+<link as="image" fetchpriority="high" href="img/email_hero.webp" rel="preload"/>
+<link as="image" href="logo.webp" rel="preload"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="styles.css" rel="stylesheet"/>
+<style>
+  body { background: #F9F9F9; }
+  .fade-in-up {
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .hero-capture {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    background: linear-gradient(145deg, #fce8f3 0%, #FAF6F1 100%);
+    box-shadow: var(--shadow);
+  }
+
+  .capture-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--black);
+    line-height: 1.25;
+    margin-bottom: 12px;
+  }
+
+  .capture-text {
+    font-size: 14px;
+    color: var(--gray);
+    line-height: 1.5;
+    margin-bottom: 28px;
+  }
+
+  .input-wrapper {
+    position: relative;
+    margin-bottom: 24px;
+  }
+
+  .floating-label {
+    position: absolute;
+    left: 18px;
+    top: 18px;
+    font-size: 14px;
+    color: #999;
+    font-weight: 500;
+    pointer-events: none;
+    transition: 0.2s ease all;
+  }
+
+  .email-input {
+    width: 100%;
+    background: #fff;
+    border: 2px solid #EBEBEB;
+    border-radius: 16px;
+    padding: 24px 18px 10px 18px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    color: var(--black);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+  }
+
+  .email-input:focus {
+    outline: none;
+    border-color: var(--pink);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(198,43,122,0.1);
+  }
+
+  .email-input:focus ~ .floating-label,
+  .email-input:not(:placeholder-shown) ~ .floating-label {
+    top: 8px;
+    font-size: 11px;
+    color: var(--pink);
+    font-weight: 600;
+  }
+
+  .error-msg {
+    color: var(--red);
+    font-size: 13px;
+    margin-top: 8px;
+    display: none;
+    font-weight: 500;
+  }
+
+  .guarantee {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+    font-size: 12px;
+    color: #A0A0A0;
+    font-weight: 500;
+  }
+
+  /* Specific fix for desktop container to look like the quiz */
+  body {
+    background: #F9F9F9;
+  }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+<div class="logo-header" style="text-align: center; padding: 24px 0 16px;"><img alt="DigiKit" onerror="this.style.display='none';this.nextSibling.style.display='inline-block'" src="logo.webp" style="height: 38px; width: auto; display: inline-block;"/><span style="display:none;font-size:18px;font-weight:800;color:var(--pink)">DIGIKIT</span></div>
+<div class="top-bar">
+<button class="back-btn" onclick="goBack()">←</button>
+<span class="section-title">Último Passo</span>
+<span class="progress-pct">95%</span>
+</div>
+<div class="progress-bar-wrapper">
+<div class="progress-bar-fill" style="width:95%"></div>
+</div>
+<!-- Capture Content -->
+<div class="fade-in-up" style="padding: 20px;">
+<!-- Imagem Hero Premium gerada -->
+<img alt="Seu Plano DigiKit" class="hero-capture" src="img/email_hero.webp"/>
+<h1 class="capture-title"><span id="uName"></span>, para onde enviamos seu plano personalizado?</h1>
+<p class="capture-text">
+      Com base na sua análise, montamos um plano <strong>100% focado no seu metabolismo</strong>.
+    </p>
+<!-- Label como no original -->
+<div style="font-size: 13px; font-weight: 700; color: var(--black); margin-bottom: 8px;">E-mail</div>
+<div class="input-wrapper" style="margin-bottom: 16px;">
+<input class="email-input" id="emailInput" placeholder="Seu melhor e-mail" required="" style="padding: 18px 16px;" type="email"/>
+<div class="error-msg" id="errorMsg">⚠️ Insira um e-mail válido com @ para continuar.</div>
+</div>
+<!-- Checkbox de Opt-in -->
+<label style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; cursor: pointer;">
+<input checked="" id="updateOptin" style="width: 20px; height: 20px; margin-top: 2px; accent-color: var(--pink); cursor: pointer;" type="checkbox"/>
+<span style="font-size: 13px; color: var(--gray); line-height: 1.4;">
+        Eu gostaria de receber atualizações e ofertas especiais do Método DigiKit.
+      </span>
+</label>
+<!-- Mini disclaimer -->
+<div style="font-size: 12px; color: #999; text-align: center; margin-bottom: 24px;">
+      Enviaremos seu plano para este e-mail. Se não encontrá-lo, verifique também sua caixa de Spam.
+    </div>
+<button class="cta-btn pulse-glow" id="submitBtn" onclick="submitEmail()">
+      Obter meu plano →
+    </button>
+</div>
+</div>
+<script>
+  // Puxar o nome do localStorage de forma segura
+  let answers = {};
+  try {
+    const raw = localStorage.getItem('digikit_answers');
+    if (raw && raw !== "null" && raw !== "undefined") {
+      answers = JSON.parse(raw) || {};
+    }
+  } catch (e) {
+    console.error("[DigiKit] localStorage bloqueado:", e);
+  }
+
+  if (answers.firstName) {
+    const n = answers.firstName.charAt(0).toUpperCase() + answers.firstName.slice(1);
+    document.getElementById('uName').innerText = n;
+  } else {
+    document.getElementById('uName').innerText = 'Você';
+  }
+
+  function goBack() {
+    window.location.href = 'quiz.html';
+  }
+
+  function submitEmail() {
+    const email = document.getElementById('emailInput').value;
+    const errorMsg = document.getElementById('errorMsg');
+    const btn = document.getElementById('submitBtn');
+
+    // Regex de validação real de e-mail
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email || !emailRegex.test(email)) {
+      errorMsg.style.display = 'block';
+      document.getElementById('emailInput').style.borderColor = 'var(--red)';
+      return;
+    }
+
+    errorMsg.style.display = 'none';
+    document.getElementById('emailInput').style.borderColor = 'var(--green)';
+
+    // Loading state no botão
+    btn.innerHTML = '<span style="opacity:0.8">Processando...</span>';
+    btn.style.transform = 'scale(0.98)';
+    btn.disabled = true;
+
+    // Salva e avança de forma segura (funciona até em navegador privado/Instagram)
+    let savedAnswers = {};
+    try {
+      const raw = localStorage.getItem('digikit_answers');
+      if (raw && raw !== "null" && raw !== "undefined") {
+        savedAnswers = JSON.parse(raw) || {};
+      }
+    } catch (e) {
+      console.error("[DigiKit] localStorage bloqueado ao ler:", e);
+    }
+
+    savedAnswers.email = email;
+
+    try {
+      localStorage.setItem('digikit_answers', JSON.stringify(savedAnswers));
+    } catch (e) {
+      console.error("[DigiKit] localStorage bloqueado ao gravar:", e);
+    }
+
+    // Envia silenciosamente para o Systeme.io via funcao backend Vercel
+    // Sem risco de bloquear o redirecionamento -- falha silenciosa garantida
+    try {
+      const name = savedAnswers.firstName || '';
+      fetch('/funil/capture-lead.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        keepalive: true, // Garante que o navegador termine de enviar mesmo se mudar de pagina
+        body: JSON.stringify({ email: email, firstName: name })
+      }).then(function(r) { return r.json(); }).then(function(data) {
+        console.log('[DigiKit] Lead enviada ao Systeme.io:', data);
+      }).catch(function(err) {
+        console.error('[DigiKit] Falha silenciosa Systeme.io:', err);
+      });
+    } catch (err) {
+      console.error('[DigiKit] Erro no envio silencioso:', err);
+    }
+
+    let isRedirecting = false;
+    const redirect = () => {
+      if (isRedirecting) return;
+      isRedirecting = true;
+      var _p = new URLSearchParams(window.location.search);
+      var _co = _p.get('checkout_url');
+      window.location.href = 'scratchcard.html' + (_co ? '?checkout_url=' + encodeURIComponent(_co) : '');
+    };
+
+    if (window.digikitTracking) {
+      try {
+        window.digikitTracking.track('lead_email_submit', {
+          step: 'email_capture',
+          email_domain: String(email).split('@')[1] || '',
+          eventCallback: redirect,
+          eventTimeout: 2000
+        });
+      } catch (err) {
+        console.error("[DigiKit] Erro de tracking em submitEmail:", err);
+        redirect();
+      }
+      // Fallback extra caso o GTM demore ou falhe
+      setTimeout(redirect, 2500);
+    } else {
+      // Sem tracking: avança direto após 500ms
+      setTimeout(redirect, 500);
+    }
+  }
+</script>
+</body>
+</html>

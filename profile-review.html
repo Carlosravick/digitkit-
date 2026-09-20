@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<!-- UTMify: Captura de UTMs para rastreamento de ROI -->
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Seu Perfil — Método DigiKit</title>
+<script src="tracking-config.js"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5SXNTQXJ');
+</script>
+<script src="tracking.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="styles.css" rel="stylesheet"/>
+<style>
+  body { background: #F9F9F9; }
+  .fade-in-up {
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  
+  .capture-title { font-size: 26px; font-weight: 800; color: var(--black); line-height: 1.25; margin-bottom: 8px; margin-top: 16px; text-align: center; }
+  .capture-title span { color: var(--pink); }
+  .capture-text { font-size: 14px; color: var(--gray); line-height: 1.5; margin-bottom: 24px; text-align: center; }
+  
+  /* BOX DE COMPARAÇÃO */
+  .compare-box { background: #fff; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); padding: 24px 16px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-start; border: 1px solid #EEE; position: relative; }
+  
+  .side { display: flex; flex-direction: column; align-items: center; width: 48%; }
+  .side-title { font-size: 12px; font-weight: 700; color: #999; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.5px; }
+  .side-img { width: 100%; max-width: 150px; height: 200px; object-fit: contain; object-position: center; border-radius: 12px; opacity: 0.95; margin-bottom: 16px; }
+  .side-metric { background: #F9F9F9; width: 100%; border-radius: 12px; padding: 12px 8px; text-align: center; border: 1px solid #EEE; }
+  .metric-val { font-size: 22px; font-weight: 800; color: var(--black); }
+  .metric-lbl { font-size: 11px; color: var(--gray); font-weight: 500; }
+  
+  /* Destaque Futuro */
+  .side.future .side-title { color: var(--pink); }
+  .side.future .side-img { opacity: 1; border-radius: 12px; box-shadow: none; filter: drop-shadow(0 10px 15px rgba(198,43,122,0.15)); }
+  .side.future .side-metric { background: #FFF4F8; border-color: #F0DCE5; }
+  .side.future .metric-val { color: var(--pink); }
+  
+  /* VS Badge - Perfeitamente centralizado entre as imagens de altura fixa (200px) */
+  .vs-badge { position: absolute; left: 50%; top: 148px; transform: translate(-50%, -50%); background: #111; color: #fff; font-size: 12px; font-weight: 800; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.15); z-index: 10; border: 2px solid #fff; }
+
+  /* LISTA DE ATIVIDADES */
+  .profile-list { background: #fff; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); padding: 20px; margin-bottom: 24px; border: 1px solid #EEE; }
+  .pl-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #F5F5F5; }
+  .pl-item:last-child { border-bottom: none; }
+  .pl-icon { background: #E8F5E9; color: #4CAF50; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 12px; font-weight: 800; }
+  .pl-text { font-size: 13px; font-weight: 600; color: #444; }
+
+</style>
+</head>
+<body>
+
+<div class="app-container">
+<div class="logo-header" style="text-align: center; padding: 24px 0 16px;">
+<img alt="DigiKit" onerror="this.style.display='none'" src="logo.webp" style="height: 38px; width: auto; display: inline-block;"/>
+</div>
+<div class="top-bar">
+<button class="back-btn" onclick="history.back()">←</button>
+<span class="section-title">Resumo do Perfil</span>
+<span class="progress-pct">94%</span>
+</div>
+<div class="progress-bar-wrapper">
+<div class="progress-bar-fill" style="width:94%"></div>
+</div>
+<div class="screen active fade-in-up" style="display:block; min-height: 100vh; padding: 24px 16px 60px;">
+<h1 class="capture-title" id="mainTitle">Aqui está o seu perfil:</h1>
+<p class="capture-text">
+      Criamos uma projeção clínica baseada nas suas respostas para os próximos 30 dias.
+    </p>
+<!-- BOX DE COMPARAÇÃO VISUAL -->
+<div class="compare-box">
+<!-- Lado Esq: Agora -->
+<div class="side">
+<div class="side-title">VOCÊ HOJE</div>
+<img alt="Atual" class="side-img" id="imgAntes" loading="lazy" src="img/b_antes_1.webp"/>
+<div class="side-metric">
+<div class="metric-val"><span id="wCurrent">78</span>kg</div>
+<div class="metric-lbl">Peso Atual</div>
+</div>
+</div>
+<div class="vs-badge">VS</div>
+<!-- Lado Dir: Futuro -->
+<div class="side future">
+<div class="side-title">SEU FUTURO</div>
+<img alt="Objetivo" class="side-img" id="imgDepois" loading="lazy" src="img/b_depois_1.webp"/>
+<div class="side-metric">
+<div class="metric-val"><span id="wGoal">65</span>kg</div>
+<div class="metric-lbl">Peso Meta</div>
+</div>
+</div>
+</div>
+<!-- LISTA DE SOLUÇÃO -->
+<div class="profile-list">
+<div class="pl-item">
+<div class="pl-icon">✓</div>
+<div class="pl-text">Foco em: Barriga e Flancos</div>
+</div>
+<div class="pl-item">
+<div class="pl-icon">✓</div>
+<div class="pl-text">Treinos: Menos de 10 min por dia</div>
+</div>
+<div class="pl-item">
+<div class="pl-icon">✓</div>
+<div class="pl-text">Nível: Baixo Impacto (Ativação Gi)</div>
+</div>
+<div class="pl-item">
+<div class="pl-icon">✓</div>
+<div class="pl-text">Cortisol: Redução estimada em 46%</div>
+</div>
+</div>
+<!-- CTA button with fixed wrapper -->
+<div class="cta-fixed" style="position: relative; background: none; padding: 12px 0 40px; max-width: 100%; transform: none; left: 0;">
+<button class="cta-btn pulse-glow" onclick="goToEmailCapture()">
+        Ver Meu Plano Completo →
+      </button>
+</div>
+</div>
+</div>
+<script>
+  // Puxar os dados salvos do localStorage
+  const answers = JSON.parse(localStorage.getItem('digikit_answers') || '{}');
+  
+  if (answers.firstName) {
+    document.getElementById('mainTitle').innerHTML = `<span>${answers.firstName}</span>, aqui está o seu perfil:`;
+  }
+
+  // 1. PESO ATUAL E PESO META PERSONALIZADO DA USUÁRIA
+  const currentW = answers.weight || 78;
+  const targetW = answers.targetWeight || (answers.q9 ? parseFloat(answers.q9) : null) || (currentW > 60 ? currentW - 10 : currentW - 4);
+  
+  document.getElementById('wCurrent').innerText = Math.round(currentW);
+  document.getElementById('wGoal').innerText = Math.round(targetW);
+
+  // 2. FOTOGRAFIAS REAIS — MESMA ETNIA CAUCASIANA (CORPO CHEIO vs CORPO FIT)
+  let antesSrc = 'img/b_antes_1.webp';
+  let depoisSrc = 'img/b_depois_1.webp';
+
+  const imgAntes = document.getElementById('imgAntes');
+  const imgDepois = document.getElementById('imgDepois');
+  
+  if (imgAntes) imgAntes.src = antesSrc;
+  if (imgDepois) imgDepois.src = depoisSrc;
+
+  // 3. ZONAS ALVO PERSONALIZADAS (q6)
+  if (answers.q6) {
+    const zones = Array.isArray(answers.q6) ? answers.q6 : [answers.q6];
+    const zoneLabels = {
+      'barriga': 'Barriga e Flancos',
+      'gluteos': 'Glúteos',
+      'coxas': 'Coxas e Quadris',
+      'bracos': 'Braços e Ombros'
+    };
+    const formattedZones = zones.map(z => zoneLabels[z] || z).join(', ');
+    const focoEl = document.querySelector('.profile-list .pl-item:first-child .pl-text');
+    if (focoEl && formattedZones) {
+      focoEl.innerText = 'Foco em: ' + formattedZones;
+    }
+  }
+
+  function goToEmailCapture() {
+    if (window.digikitTracking) {
+      window.digikitTracking.track('profile_review_continue', {
+        step: 'profile_review'
+      });
+    }
+    setTimeout(function () {
+      var _p = new URLSearchParams(window.location.search);
+      var _co = _p.get('checkout_url');
+      window.location.href = 'email-capture.html' + (_co ? '?checkout_url=' + encodeURIComponent(_co) : '');
+    }, 120);
+  }
+</script>
+</body>
+</html>

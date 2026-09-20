@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<!-- UTMify: Captura de UTMs para rastreamento de ROI -->
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Seu Nome — Método DigiKit</title>
+<script src="tracking-config.js"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5SXNTQXJ');
+</script>
+<script src="tracking.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="styles.css" rel="stylesheet"/>
+<style>
+  body { background: #F9F9F9; }
+  .fade-in-up {
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  
+  .capture-title { font-size: 26px; font-weight: 800; color: var(--black); line-height: 1.25; margin-bottom: 12px; margin-top: 32px; text-align: center; }
+  .capture-text { font-size: 15px; color: var(--gray); line-height: 1.5; margin-bottom: 40px; text-align: center; }
+  
+  .input-wrapper { position: relative; margin-bottom: 24px; }
+  .name-input { width: 100%; background: #fff; border: 2px solid #EBEBEB; border-radius: 16px; padding: 24px 18px 24px 18px; font-size: 18px; font-weight: 600; font-family: 'Poppins', sans-serif; color: var(--black); transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.02); text-align: center; }
+  .name-input:focus { outline: none; border-color: var(--pink); background: #fff; box-shadow: 0 0 0 4px rgba(198,43,122,0.1); }
+  .error-msg { color: var(--red); font-size: 13px; margin-top: 8px; display: none; font-weight: 500; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+<div class="logo-header" style="text-align: center; padding: 24px 0 16px;">
+<img alt="DigiKit" onerror="this.style.display='none'" src="logo.webp" style="height: 38px; width: auto; display: inline-block;"/>
+</div>
+<div class="top-bar">
+<button class="back-btn" onclick="history.back()">←</button>
+<span class="section-title">Quase lá!</span>
+<span class="progress-pct">93%</span>
+</div>
+<div class="progress-bar-wrapper">
+<div class="progress-bar-fill" style="width:93%"></div>
+</div>
+<div class="screen active fade-in-up" style="display:block; min-height: 100vh;">
+<h1 class="capture-title">Primeiro, como podemos<br/>te chamar?</h1>
+<p class="capture-text">
+      Os nossos planos são 100% personalizados, o seu também precisa ter o seu nome!
+    </p>
+<div class="input-wrapper">
+<input class="name-input" id="nameInput" placeholder="Digite seu primeiro nome" required="" type="text"/>
+<div class="error-msg" id="errorMsg">⚠️ Por favor, digite seu nome.</div>
+</div>
+<!-- CTA button with fixed wrapper -->
+<div class="cta-fixed" style="position: relative; background: none; padding: 20px 0; max-width: 100%; transform: none; left: 0;">
+<button class="cta-btn pulse-glow" id="submitBtn" onclick="submitName()">
+        Continuar →
+      </button>
+</div>
+</div>
+</div>
+<script>
+  function submitName() {
+    const name = document.getElementById('nameInput').value.trim();
+    const errorMsg = document.getElementById('errorMsg');
+    
+    if(!name || name.length < 2) {
+      errorMsg.style.display = 'block';
+      document.getElementById('nameInput').style.borderColor = 'var(--red)';
+      return;
+    }
+    
+    errorMsg.style.display = 'none';
+    document.getElementById('nameInput').style.borderColor = 'var(--green)';
+    document.getElementById('submitBtn').innerHTML = 'Calculando...';
+
+    const answers = JSON.parse(localStorage.getItem('digikit_answers') || '{}');
+    answers.firstName = name;
+    localStorage.setItem('digikit_answers', JSON.stringify(answers));
+
+    if (window.digikitTracking) {
+      window.digikitTracking.track('lead_name_submit', {
+        step: 'name_capture',
+        name_length: name.length
+      });
+    }
+
+    setTimeout(() => {
+      var _p = new URLSearchParams(window.location.search);
+      var _co = _p.get('checkout_url');
+      window.location.href = 'profile-review.html' + (_co ? '?checkout_url=' + encodeURIComponent(_co) : '');
+    }, 600);
+  }
+</script>
+</body>
+</html>

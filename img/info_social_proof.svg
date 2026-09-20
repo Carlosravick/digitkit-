@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" width="400" height="240">
+    <defs>
+      <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#C62B7A" />
+        <stop offset="100%" stop-color="#A01F63" />
+      </linearGradient>
+      <linearGradient id="softBg" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#FDF0F7" />
+        <stop offset="100%" stop-color="#FAF6F1" />
+      </linearGradient>
+      <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#F5B942" />
+        <stop offset="100%" stop-color="#E8A030" />
+      </linearGradient>
+      <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#4ECDC4" />
+        <stop offset="100%" stop-color="#3D9970" />
+      </linearGradient>
+      <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#C62B7A" flood-opacity="0.15" />
+      </filter>
+    </defs>
+    
+      <rect width="400" height="240" fill="url(#softBg)" rx="20" />
+      <rect x="20" y="20" width="360" height="200" fill="white" rx="16" filter="url(#shadow)" />
+      <!-- Star Ratings -->
+      <g transform="translate(130, 45)">
+        <polygon points="10,0 13,7 20,8 15,13 16,20 10,16 4,20 5,13 0,8 7,7" fill="#F5B942" />
+        <polygon points="35,0 38,7 45,8 40,13 41,20 35,16 29,20 30,13 25,8 32,7" fill="#F5B942" />
+        <polygon points="60,0 63,7 70,8 65,13 66,20 60,16 54,20 55,13 50,8 57,7" fill="#F5B942" />
+        <polygon points="85,0 88,7 95,8 90,13 91,20 85,16 79,20 80,13 75,8 82,7" fill="#F5B942" />
+        <polygon points="110,0 113,7 120,8 115,13 116,20 110,16 104,20 105,13 100,8 107,7" fill="#F5B942" />
+      </g>
+      <text x="200" y="95" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="bold" text-anchor="middle" fill="#C62B7A">+12.000 MULHERES</text>
+      <text x="200" y="125" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#555555">Transformação Comprovada com o Método DigiKit</text>
+      <!-- Avatars row -->
+      <g transform="translate(140, 145)">
+        <circle cx="0" cy="20" r="16" fill="#F5B942" />
+        <circle cx="40" cy="20" r="16" fill="#C62B7A" />
+        <circle cx="80" cy="20" r="16" fill="#3D9970" />
+        <circle cx="120" cy="20" r="16" fill="#4ECDC4" />
+      </g>
+    
+  </svg>

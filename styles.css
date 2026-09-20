@@ -1,0 +1,774 @@
+/* ============================================================
+   MÉTODO K-SLIM — DESIGN SYSTEM
+   Paleta K-beauty | Poppins | Mobile-first
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Poppins', -apple-system, sans-serif;
+  background: #FAF6F1;
+  color: #2D2D2D;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== CSS VARIABLES ===== */
+:root {
+  --pink:       #C62B7A;
+  --pink-dark:  #A01F63;
+  --pink-light: #fdf0f7;
+  --cream:      #FAF6F1;
+  --gold:       #E8A030;
+  --green:      #3D9970;
+  --red:        #D63031;
+  --black:      #2D2D2D;
+  --gray:       #888888;
+  --gray-light: #E8E8E8;
+  --white:      #FFFFFF;
+  --shadow:     0 8px 32px rgba(198,43,122,0.12);
+  --shadow-lg:  0 12px 48px rgba(198,43,122,0.18);
+  --radius:     16px;
+  --radius-lg:  24px;
+  --radius-xl:  50px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== LAYOUT — MOBILE FRAME ===== */
+.app-container {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===== BRAND HEADER ===== */
+.logo-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 16px 20px 14px !important;
+  background: var(--white) !important;
+  border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+}
+
+.logo-header img {
+  display: block;
+  height: 96px !important;
+  width: auto !important;
+  max-width: 320px !important;
+  object-fit: contain !important;
+}
+
+/* ===== HEADER / TOP BAR ===== */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: var(--white);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.top-bar .back-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: var(--cream);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--black);
+  transition: var(--transition);
+}
+.top-bar .back-btn:active { transform: scale(0.9); }
+
+.top-bar .section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray);
+  text-align: center;
+  flex: 1;
+}
+
+.top-bar .progress-pct {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--pink);
+  min-width: 36px;
+  text-align: right;
+}
+
+/* ===== PROGRESS BAR ===== */
+.progress-bar-wrapper {
+  height: 4px;
+  background: var(--gray-light);
+  position: relative;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--pink), #e055a0);
+  border-radius: 0 4px 4px 0;
+  transition: width 0.6s cubic-bezier(0.34, 1.2, 0.64, 1);
+}
+
+/* ===== SCREEN CONTAINER ===== */
+.screen {
+  display: none;
+  padding: 28px 24px 100px;
+  animation: screenIn 0.4s ease;
+  min-height: calc(100vh - 60px);
+}
+.screen.active { display: block; }
+
+@keyframes screenIn {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ===== QUESTION STYLES ===== */
+.question-emoji {
+  font-size: 48px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.question-image {
+  width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+}
+
+.question-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--black);
+  text-align: center;
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+
+.question-subtitle {
+  font-size: 13px;
+  color: var(--gray);
+  text-align: center;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+/* ===== OPTION BUTTONS ===== */
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.option-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px 20px;
+  background: var(--white);
+  border: 2px solid var(--gray-light);
+  border-radius: var(--radius);
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--black);
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: left;
+  line-height: 1.4;
+}
+
+.option-btn:hover {
+  border-color: var(--pink);
+  background: var(--pink-light);
+}
+
+.option-btn.selected {
+  border-color: var(--pink);
+  background: var(--pink-light);
+  color: var(--pink);
+  font-weight: 600;
+}
+
+.option-btn .radio-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--gray-light);
+  flex-shrink: 0;
+  transition: var(--transition);
+  position: relative;
+}
+.option-btn.selected .radio-dot {
+  border-color: var(--pink);
+  background: var(--pink);
+}
+.option-btn.selected .radio-dot::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* Checkbox style (multi-select) */
+.option-btn .check-box {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid var(--gray-light);
+  flex-shrink: 0;
+  transition: var(--transition);
+  position: relative;
+}
+.option-btn.selected .check-box {
+  border-color: var(--pink);
+  background: var(--pink);
+}
+.option-btn.selected .check-box::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* ===== IMAGE GRID OPTIONS (body areas, exercises) ===== */
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.option-card {
+  background: var(--cream);
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.option-card:hover { border-color: var(--pink); }
+.option-card.selected {
+  border-color: var(--pink);
+  background: var(--pink-light);
+}
+
+.option-card img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+.option-card .card-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--black);
+}
+.option-card.selected .card-label { color: var(--pink); }
+
+.option-card .card-radio {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--gray-light);
+  margin: 6px auto 0;
+  transition: var(--transition);
+}
+.option-card.selected .card-radio {
+  border-color: var(--pink);
+  background: var(--pink);
+}
+
+/* ===== EXERCISE RATING (Gosto / Neutro / Não gosto) ===== */
+.exercise-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.exercise-img {
+  width: 180px;
+  height: 180px;
+  border-radius: 20px;
+  object-fit: cover;
+  box-shadow: var(--shadow);
+}
+
+.rating-btns {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+.rating-btn {
+  flex: 1;
+  padding: 14px 8px;
+  border: 2px solid var(--gray-light);
+  border-radius: var(--radius);
+  background: var(--white);
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--black);
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+}
+.rating-btn:hover { border-color: var(--pink); }
+.rating-btn.selected {
+  border-color: var(--pink);
+  background: var(--pink);
+  color: white;
+}
+
+/* ===== INPUT FIELDS (height, weight, name, email) ===== */
+.input-group {
+  margin: 20px 0;
+}
+.input-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray);
+  margin-bottom: 8px;
+  display: block;
+}
+.input-field {
+  width: 100%;
+  padding: 16px 20px;
+  border: 2px solid var(--gray-light);
+  border-radius: var(--radius);
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--black);
+  text-align: center;
+  outline: none;
+  transition: var(--transition);
+  background: var(--white);
+}
+.input-field:focus {
+  border-color: var(--pink);
+  box-shadow: 0 0 0 4px rgba(198,43,122,0.1);
+}
+.input-field::placeholder {
+  color: #ccc;
+  font-weight: 400;
+}
+
+.unit-toggle {
+  display: flex;
+  gap: 0;
+  background: var(--cream);
+  border-radius: 30px;
+  padding: 3px;
+  margin-bottom: 16px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+.unit-btn {
+  padding: 8px 24px;
+  border: none;
+  border-radius: 30px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  background: transparent;
+  color: var(--gray);
+}
+.unit-btn.active {
+  background: var(--white);
+  color: var(--pink);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* ===== CTA BUTTON ===== */
+.cta-btn {
+  display: block;
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, var(--pink), #e055a0);
+  color: var(--white);
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0 6px 24px rgba(198,43,122,0.3);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.cta-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 3px 12px rgba(198,43,122,0.2);
+}
+.cta-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+/* Botão fixo no rodapé */
+.cta-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 480px;
+  width: 100%;
+  padding: 16px 24px 28px;
+  background: linear-gradient(to top, white 60%, transparent);
+  z-index: 90;
+}
+
+/* ===== INFO SCREENS ===== */
+.info-screen {
+  text-align: center;
+}
+.info-screen .info-icon {
+  font-size: 56px;
+  margin-bottom: 16px;
+}
+.info-screen .info-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--black);
+  line-height: 1.35;
+  margin-bottom: 16px;
+}
+.info-screen .info-text {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.7;
+  text-align: left;
+  margin-bottom: 20px;
+}
+.info-screen .info-text strong {
+  color: var(--pink);
+}
+
+.info-highlight {
+  background: var(--pink-light);
+  border-left: 4px solid var(--pink);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+  text-align: left;
+}
+.info-highlight p {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.6;
+}
+.info-highlight strong { color: var(--pink); }
+
+.info-stat {
+  display: inline-block;
+  background: var(--pink);
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 20px;
+  border-radius: 30px;
+  margin: 12px 0;
+}
+
+/* ===== HERO / LANDING ===== */
+.hero-section {
+  text-align: center;
+  padding: 20px 24px 32px;
+}
+.hero-stars {
+  font-size: 14px;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.hero-stars span {
+  font-size: 12px;
+  color: var(--gray);
+  font-weight: 500;
+}
+.hero-image {
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  margin: 20px 0;
+  box-shadow: var(--shadow);
+}
+.hero-headline {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--black);
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+.hero-headline em {
+  color: var(--pink);
+  font-style: normal;
+}
+.hero-subheadline {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+.hero-subheadline strong { color: var(--pink); }
+
+.hero-badges {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.hero-badge {
+  background: var(--cream);
+  border: 1px solid var(--gray-light);
+  border-radius: 30px;
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ===== TIMER ===== */
+.timer-bar {
+  background: #FFF3CD;
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  padding: 10px 16px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #856404;
+  margin: 16px 0;
+}
+.timer-bar .timer-value {
+  color: var(--red);
+  font-weight: 800;
+  font-size: 16px;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 6px 24px rgba(198,43,122,0.3); }
+  50%      { box-shadow: 0 6px 32px rgba(198,43,122,0.5); }
+}
+.animate-fade   { animation: fadeIn 0.5s ease; }
+.animate-fadeUp { animation: fadeInUp 0.5s ease; }
+.animate-pulse  { animation: pulseGlow 2s infinite; }
+
+/* ===== RESPONSIVE — MOBILE FIRST ===== */
+
+/* Móvel padrão (até 480px) — O FUNIL É FEITO PARA MOBILE */
+@media (max-width: 480px) {
+  .app-container {
+    max-width: 100%;
+    border-radius: 0;
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height — para browsers modernos */
+  }
+
+  .screen {
+    padding: 20px 18px 120px;
+  }
+
+  /* Fonte adaptada para telas menores */
+  .question-title { font-size: 19px; }
+  .hero-headline { font-size: 21px; }
+  .info-screen .info-title { font-size: 19px; }
+  .hero-subheadline { font-size: 13px; }
+
+  /* Hero image menor no mobile */
+  .hero-image { max-height: 240px; }
+
+  /* Touch targets: mínimo 44px de altura (WCAG) */
+  .option-btn {
+    min-height: 52px;
+    padding: 14px 16px;
+    font-size: 14px;
+  }
+
+  .rating-btn {
+    min-height: 48px;
+    padding: 12px 6px;
+    font-size: 12px;
+  }
+
+  .cta-btn {
+    padding: 16px;
+    font-size: 15px;
+    min-height: 54px;
+  }
+
+  /* Badges menores */
+  .hero-badge {
+    font-size: 10px;
+    padding: 5px 10px;
+  }
+
+  /* Input fields maiores para toque fácil */
+  .input-field {
+    font-size: 22px;
+    padding: 18px 16px;
+    min-height: 60px;
+  }
+
+  /* Safe area para iPhones com notch */
+  .cta-fixed {
+    padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Options grid: 2 colunas menores */
+  .options-grid { gap: 8px; }
+  .option-card { padding: 10px; }
+  .option-card img { height: 80px; }
+  .option-card .card-label { font-size: 12px; }
+}
+
+/* Móvel muito pequeno (320px — iPhone SE) */
+@media (max-width: 360px) {
+  .screen { padding: 16px 14px 100px; }
+  .question-title { font-size: 17px; }
+  .hero-headline { font-size: 19px; }
+  .option-btn { font-size: 13px; padding: 12px 14px; }
+  .hero-image { max-height: 200px; }
+  .hero-badges { gap: 6px; }
+  .hero-badge { font-size: 9px; padding: 4px 8px; }
+}
+
+/* Desktop (>480px) — layout de site normal, igual ao concorrente */
+@media (min-width: 481px) {
+  body {
+    background: #ffffff;
+    display: block;
+    padding: 0;
+  }
+
+  .app-container {
+    max-width: 680px;
+    border-radius: 0;
+    box-shadow: none;
+    min-height: 100vh;
+    max-height: none;
+    overflow-y: visible;
+    overflow-x: hidden;
+    margin: 0 auto;
+    border-left: none;
+    border-right: none;
+    background: #fff;
+  }
+
+  /* Scrollbar do body no desktop */
+  body::-webkit-scrollbar { width: 6px; }
+  body::-webkit-scrollbar-thumb {
+    background: var(--pink);
+    border-radius: 4px;
+  }
+  body::-webkit-scrollbar-track { background: transparent; }
+
+  /* Header fixo no topo em desktop */
+  .logo-header {
+    position: sticky;
+    top: 0;
+    z-index: 110;
+  }
+
+  /* CTA fixo funciona normalmente — mas respeita max-width do container */
+  .cta-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 680px;
+    width: 100%;
+    padding: 16px 32px 28px;
+    background: linear-gradient(to top, white 70%, transparent);
+    z-index: 90;
+  }
+
+  /* Mais espaço nas telas maiores */
+  .screen {
+    padding: 36px 48px 120px;
+  }
+
+  /* Fontes maiores no desktop */
+  .question-title { font-size: 24px; }
+  .info-screen .info-title { font-size: 23px; }
+
+  /* Photo grid com imagens maiores */
+  .photo-card img { height: 160px; }
+}
+
+/* Previne zoom em inputs no iOS */
+@media screen and (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="number"],
+  input[type="tel"],
+  select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Disable hover effects on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .option-btn:hover {
+    border-color: var(--gray-light);
+    background: var(--white);
+  }
+  .option-card:hover { border-color: transparent; }
+  .rating-btn:hover { border-color: var(--gray-light); }
+}

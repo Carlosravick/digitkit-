@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 144" width="480" height="144">
+  <defs>
+    <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E055A0" />
+      <stop offset="100%" stop-color="#C62B7A" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5B942" />
+      <stop offset="100%" stop-color="#D49020" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#C62B7A" flood-opacity="0.2" />
+    </filter>
+  </defs>
+
+  <!-- Clean background (transparent or pure white) -->
+  <rect width="480" height="144" fill="#FFFFFF" />
+
+  <!-- Logo Icon: Elegant stylized DigiKit K/D Lotus Silhouette -->
+  <g transform="translate(60, 24)" filter="url(#shadow)">
+    <!-- Graceful pink body contour lines -->
+    <path d="M 28 8 C 12 28, 8 52, 28 72 C 38 82, 48 92, 48 96 C 48 92, 38 82, 28 72 C 18 62, 16 38, 28 8 Z" fill="url(#pinkGrad)" />
+    <path d="M 36 0 C 18 24, 16 56, 36 78 C 46 88, 54 96, 54 96 C 54 96, 46 86, 36 78 C 24 68, 22 34, 36 0 Z" fill="url(#pinkGrad)" opacity="0.85" />
+    
+    <!-- Gold accent swoop -->
+    <path d="M 38 32 C 48 20, 64 24, 72 36 C 62 38, 48 44, 38 32 Z" fill="url(#goldGrad)" />
+    <circle cx="68" cy="22" r="5" fill="url(#goldGrad)" />
+  </g>
+
+  <!-- Brand Typography: DIGIKIT -->
+  <g transform="translate(165, 88)">
+    <text font-family="'Poppins', 'Arial', sans-serif" font-size="52" font-weight="800" letter-spacing="-1">
+      <tspan fill="#222222">Digi</tspan><tspan fill="url(#pinkGrad)">Kit</tspan>
+    </text>
+  </g>
+</svg>

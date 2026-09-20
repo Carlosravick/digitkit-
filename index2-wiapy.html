@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Método DigiKit - O segredo das coreanas para afinar sem academia</title>
+<meta content="Faça o quiz gratuito e descubra como o Método DigiKit pode transformar seu corpo em 21 dias com apenas 10 minutos por dia." name="description"/>
+<script src="tracking-config.js"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5SXNTQXJ');
+</script>
+<script src="tracking.js"></script>
+<link as="image" fetchpriority="high" href="hero.webp" rel="preload"/>
+<link as="image" href="logo.webp" rel="preload"/>
+<link href="styles.css" rel="stylesheet"/>
+<style>
+  /* Logo header */
+  .logo-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: var(--white);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .logo-header img {
+    height: 44px;
+    width: auto;
+    max-width: 160px;
+    object-fit: contain;
+  }
+
+  /* Progress bar area */
+  .progress-area {
+    margin: 24px auto 8px;
+    width: 100%;
+    max-width: 340px;
+    text-align: center;
+  }
+
+  .progress-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #c2185b;
+    margin-bottom: 10px;
+    min-height: 20px;
+    transition: opacity 0.4s ease;
+    letter-spacing: 0.01em;
+  }
+
+  .progress-track {
+    width: 100%;
+    height: 10px;
+    background: #fce4ec;
+    border-radius: 99px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #e91e8c, #f06292);
+    border-radius: 99px;
+    animation: fillBar 12s linear forwards;
+    position: relative;
+  }
+
+  .progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5));
+    border-radius: 99px;
+    animation: shimmer 1.2s ease-in-out infinite;
+  }
+
+  @keyframes fillBar {
+    from { width: 0%; }
+    to   { width: 100%; }
+  }
+
+  @keyframes shimmer {
+    0%   { opacity: 0; }
+    50%  { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  .progress-subtext {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 10px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="app-container" id="app">
+<!-- LOGO HEADER -->
+<div class="logo-header">
+<img alt="Método DigiKit" src="logo.webp"/>
+</div>
+<!-- LANDING HERO -->
+<div class="screen active" id="screenLanding">
+<div class="hero-section">
+<!-- Stars -->
+<div class="hero-stars animate-fade">
+        ⭐⭐⭐⭐⭐ <span>4.9 | Mais de 2 milhões de mulheres já descobriram</span>
+</div>
+<!-- Hero Image -->
+<img alt="Método DigiKit" class="hero-image animate-fadeUp" src="hero.webp"/>
+<!-- Headline -->
+<h1 class="hero-headline animate-fadeUp">
+        O segredo das coreanas para <em>afinar sem academia.</em>
+</h1>
+<p class="hero-subheadline animate-fadeUp">
+        O Método DigiKit usa a <strong>Ativação Gi</strong> - técnica da medicina coreana
+        tradicional - para reequilibrar o metabolismo de dentro para fora.
+        Em apenas <strong>10 minutos por dia</strong>, em casa.
+      </p>
+<!-- Trust Badges -->
+<div class="hero-badges animate-fadeUp">
+<div class="hero-badge">🏠 Em casa</div>
+<div class="hero-badge">⏱ 10 min/dia</div>
+<div class="hero-badge">🚫 Sem academia</div>
+<div class="hero-badge">🌸 Método coreano</div>
+</div>
+<!-- PROGRESS BAR (substitui o botão) -->
+<div class="progress-area animate-fadeUp">
+<div class="progress-label" id="progressLabel">🔍 Analisando os perfis DigiKit...</div>
+<div class="progress-track">
+<div class="progress-fill" id="progressFill"></div>
+</div>
+<p class="progress-subtext">⚡ Quiz 100% gratuito - leva menos de 3 minutos</p>
+</div>
+</div>
+</div>
+</div>
+<script>
+(function () {
+  // ============================================================
+  // VARIAÇÃO V2 — Novo checkout: pay.cakto.com.br/93ktrhz_1124109
+  // ============================================================
+  var NEW_CHECKOUT_URL = 'https://pay.cakto.com.br/93ktrhz_1124109';
+
+  // Dispara evento de tracking imediatamente (100% dos visitantes)
+  if (window.digikitTracking) {
+    window.digikitTracking.track('landing_intro_continue', { location: 'landing_hero_auto' });
+  }
+
+  // Textos rotativos
+  var labels = [
+    '🔍 Analisando os perfis DigiKit...',
+    '📊 Cruzando com os dados das alunas...',
+    '✅ Seu Desafio de 21 dias está quase pronto!'
+  ];
+  var el = document.getElementById('progressLabel');
+  var idx = 0;
+
+  var rotateInterval = setInterval(function () {
+    idx++;
+    if (idx < labels.length) {
+      el.style.opacity = '0';
+      setTimeout(function () {
+        el.textContent = labels[idx];
+        el.style.opacity = '1';
+      }, 400);
+    } else {
+      clearInterval(rotateInterval);
+    }
+  }, 4000); // troca a cada 4s: 0s, 4s, 8s → redirect em 12s
+
+  // Redireciona após 12 segundos
+  setTimeout(function () {
+    if (window.digikitTracking) {
+      window.digikitTracking.track('landing_to_quiz_click', { location: 'landing_progress_bar' });
+    }
+    // Marca a variação v2 no localStorage (persiste em todo o funil)
+    try { localStorage.setItem('digikit_funnel_variant', 'wiapy'); } catch(e) {}
+    // Preserva UTMs e fbclid na URL do quiz
+    var params = window.location.search;
+    window.location.href = 'quiz.html' + params;
+  }, 12000);
+})();
+</script>
+</body>
+</html>

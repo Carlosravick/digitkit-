@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Bônus Especial — Método DigiKit</title>
+<script src="tracking-config.js"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5SXNTQXJ');
+</script>
+<script src="tracking.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="styles.css" rel="stylesheet"/>
+<style>
+  body { background: #F9F9F9; overflow-x: hidden; touch-action: pan-y; }
+  
+  .fade-in-up {
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .capture-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--black);
+    line-height: 1.2;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .capture-text {
+    font-size: 15px;
+    color: var(--gray);
+    line-height: 1.5;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  /* Gamification Core - CLINICAL/PREMIUM STYLE */
+  .gamification-wrapper {
+    position: relative;
+    padding: 6px;
+    background: #FFF;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(198,43,122,0.1);
+  }
+
+  .scratch-container {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    margin: 0 auto;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #fff;
+    border: 3px solid #FFF4F8;
+  }
+
+  /* The actual prize underneath */
+  .prize-box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: radial-gradient(circle, #FFF 0%, #FFF4F8 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  .prize-tag {
+    font-size: 13px;
+    font-weight: 800;
+    color: #999;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    margin-top: 10px;
+  }
+
+  .prize-value {
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--pink);
+    line-height: 1;
+    text-shadow: 0 2px 10px rgba(198,43,122,0.15);
+    position: relative;
+  }
+
+  .prize-bonus {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--pink);
+    margin-top: 8px;
+    background: #FFE2EE;
+    padding: 6px 16px;
+    border-radius: 100px;
+    box-shadow: 0 4px 10px rgba(198,43,122,0.1);
+  }
+
+  /* Clean Premium Winner Animations */
+  .prize-value.winner {
+    animation: text-pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+  
+  @keyframes text-pop {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { transform: scale(1.1); color: #E0358D; }
+    100% { transform: scale(1); color: var(--pink); }
+  }
+
+  .prize-box.winner::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background: conic-gradient(from 0deg, transparent 0deg, rgba(198,43,122,0.05) 30deg, transparent 60deg, transparent 180deg, rgba(198,43,122,0.05) 210deg, transparent 240deg);
+    animation: rotate-rays 6s linear infinite;
+    z-index: -1;
+  }
+
+  @keyframes rotate-rays {
+    100% { transform: rotate(360deg); }
+  }
+
+  /* The Notification Popup (Clean style) */
+  #win-notification {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: var(--pink);
+    background: linear-gradient(135deg, #C62B7A 0%, #FF9ECF 100%);
+    color: #FFF;
+    padding: 16px 24px;
+    border-radius: 16px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 800;
+    z-index: 100;
+    opacity: 0;
+    box-shadow: 0 15px 30px rgba(198,43,122,0.4);
+    pointer-events: none;
+  }
+
+  #win-notification.show {
+    animation: popup-clean 2s cubic-bezier(0.2, 0.8, 0.2, 1.1) forwards;
+  }
+
+  @keyframes popup-clean {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    15% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+    25% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    85% { transform: translate(-50%, -50%) scale(1.02); opacity: 1; }
+    100% { transform: translate(-50%, -150%) scale(0.8); opacity: 0; } 
+  }
+
+  #scratch-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    cursor: default;
+    touch-action: none; 
+  }
+
+  /* Call to action */
+  #cta-container {
+    display: none;
+    margin-top: 32px;
+    animation: fadeInUp 0.5s ease forwards;
+  }
+  
+  .urgency-badge {
+    background: #FFF1F0;
+    color: #E53935;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 100px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 20px;
+    animation: pulseRed 2s infinite;
+  }
+
+  @keyframes pulseRed {
+    0% { box-shadow: 0 0 0 0 rgba(229,57,53,0.2); }
+    70% { box-shadow: 0 0 0 10px rgba(229,57,53,0); }
+    100% { box-shadow: 0 0 0 0 rgba(229,57,53,0); }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="app-container" style="min-height: 100vh;">
+<div class="logo-header" style="text-align: center; padding: 24px 0 16px;">
+<img alt="DigiKit" fetchpriority="high" onerror="this.style.display='none'" src="logo.webp" style="height: 38px; display: inline-block;"/>
+</div>
+<div class="top-bar">
+<div style="width: 24px;"></div>
+<span class="section-title">Recompensa Oculta</span>
+<span class="progress-pct" style="color:var(--pink)">Bônus</span>
+</div>
+<div class="progress-bar-wrapper">
+<div class="progress-bar-fill" style="width:100%; background:var(--pink)"></div>
+</div>
+<div class="screen active fade-in-up" style="display:block; padding: 24px 16px 60px;">
+<h1 class="capture-title">PARABÉNS <span id="uName"></span>!</h1>
+<p class="capture-text">
+      O seu perfil destravou o acesso VIP ao <strong>Método DigiKit de Pilates Coreano</strong>. Raspe o cartão abaixo com o dedo para revelar o seu <strong>desconto secreto</strong> no programa!
+    </p>
+<div class="gamification-wrapper">
+<div class="scratch-container" id="scratch-container">
+<!-- Prêmio Escondido -->
+<div class="prize-box" id="real-prize">
+<div class="prize-tag">VOCÊ GANHOU</div>
+<div class="prize-value" id="prize-text">75% OFF</div>
+<div class="prize-bonus">Acesso Imediato</div>
+</div>
+<!-- Área Raspável -->
+<canvas height="180" id="scratch-canvas" width="340"></canvas>
+<!-- Notificação Tigrinho Clean -->
+<div id="win-notification">
+          🎉 INCRÍVEL! 🎉<br/><span style="font-size: 14px; font-weight: 500;">Promoção Desbloqueada!</span>
+</div>
+</div>
+</div>
+<!-- Módulo de Sucesso (Oculto até raspar) -->
+<div id="cta-container" style="text-align: center;">
+<div class="urgency-badge">
+        ⏳ Seu desconto irá expirar em <span id="timer">15:00</span>
+</div>
+<button class="cta-btn pulse-glow" onclick="goToSalesPage()">
+        RESGATAR MEU PLANO AGORA →
+      </button>
+<p style="font-size: 12px; color: #999; margin-top: 16px; line-height: 1.4;">
+        Aviso: Ao fechar esta janela ou deixar o tempo expirar, você perderá este desconto garantido de 75%.
+      </p>
+</div>
+</div>
+</div>
+<!-- CONFETTIS -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+  // Nome persistido
+  const answers = JSON.parse(localStorage.getItem('digikit_answers') || '{}');
+  if(answers.firstName) {
+    const n = answers.firstName.charAt(0).toUpperCase() + answers.firstName.slice(1);
+    document.getElementById('uName').innerText = n;
+  } else {
+    document.getElementById('uName').innerText = "VENCEDORA";
+  }
+
+  // --- AUDIO API ESTILO "PLIM" MAGICO ---
+  function playCasinoWinSound() {
+    try {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      
+      // Plim 1
+      const osc1 = audioCtx.createOscillator();
+      const gain1 = audioCtx.createGain();
+      osc1.type = "sine";
+      osc1.frequency.setValueAtTime(880, audioCtx.currentTime); // A5
+      osc1.frequency.exponentialRampToValueAtTime(1760, audioCtx.currentTime + 0.1); 
+      gain1.gain.setValueAtTime(0, audioCtx.currentTime);
+      gain1.gain.linearRampToValueAtTime(1, audioCtx.currentTime + 0.05);
+      gain1.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+      osc1.connect(gain1); gain1.connect(audioCtx.destination);
+      osc1.start(); osc1.stop(audioCtx.currentTime + 0.5);
+
+      // Plim 2
+      setTimeout(() => {
+        const osc2 = audioCtx.createOscillator();
+        const gain2 = audioCtx.createGain();
+        osc2.type = "sine"; 
+        osc2.frequency.setValueAtTime(1318.51, audioCtx.currentTime); // E6
+        gain2.gain.setValueAtTime(0, audioCtx.currentTime);
+        gain2.gain.linearRampToValueAtTime(0.5, audioCtx.currentTime + 0.05);
+        gain2.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
+        osc2.connect(gain2); gain2.connect(audioCtx.destination);
+        osc2.start(); osc2.stop(audioCtx.currentTime + 1);
+      }, 150);
+
+    } catch (e) { console.log("Audio API not supported"); }
+  }
+
+  // --- LOGICA DA RASPADINHA ---
+  const canvas = document.getElementById('scratch-canvas');
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  let isDrawing = false;
+  let isRevealed = false;
+
+  // 1. Desenha o fundo Prateado Clean
+  function initCanvas() {
+    const parentRect = document.getElementById('scratch-container').getBoundingClientRect();
+    canvas.width = parentRect.width;
+    canvas.height = parentRect.height;
+
+    const bgGradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    bgGradient.addColorStop(0, '#EAEAEA');
+    bgGradient.addColorStop(0.5, '#D4D4D4');
+    bgGradient.addColorStop(1, '#B0B0B0');
+    ctx.fillStyle = bgGradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = '#666';
+    ctx.font = 'bold 22px "Poppins", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('🎁 RASPE AQUI 🎁', canvas.width/2, canvas.height/2 + 8);
+    
+    ctx.globalCompositeOperation = 'destination-out';
+  }
+
+  initCanvas();
+
+  function getMousePos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return {
+      x: (clientX - rect.left),
+      y: (clientY - rect.top)
+    };
+  }
+
+  function scratch(e) {
+    if (isRevealed) return;
+    const pos = getMousePos(e);
+    
+    ctx.beginPath();
+    ctx.arc(pos.x, pos.y, 30, 0, 2 * Math.PI); // Pincel médio pra raspar um pouco
+    ctx.fill();
+    
+    checkReveal();
+  }
+
+  function handleStart(e) {
+    isDrawing = true;
+    scratch(e);
+  }
+
+  function handleMove(e) {
+    if (!isDrawing) return;
+    if (e.cancelable) e.preventDefault(); 
+    scratch(e);
+  }
+
+  function handleEnd() {
+    isDrawing = false;
+  }
+
+  // TIGRINHO MECHANIC: 25% trigger
+  let checkThrottle = false;
+  function checkReveal() {
+    if (isRevealed || checkThrottle) return;
+    
+    checkThrottle = true;
+    setTimeout(() => { checkThrottle = false; }, 50);
+
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let transparentPixels = 0;
+    
+    const maxScanLength = imgData.data.length;
+    for (let i = 3; i < maxScanLength; i += 16) {
+      if (imgData.data[i] === 0) transparentPixels++;
+    }
+    
+    const sampledPixels = maxScanLength / 16;
+    const clearedPercentage = (transparentPixels / sampledPixels) * 100;
+    
+    if (clearedPercentage > 25) {
+      isRevealed = true;
+      triggerWin();
+    }
+  }
+
+  function triggerWin() {
+    if (window.digikitTracking) {
+      window.digikitTracking.track('scratchcard_unlocked', {
+        discount_code: 'DIGIKIT75'
+      });
+    }
+    playCasinoWinSound();
+
+    canvas.style.transition = 'opacity 0.3s ease';
+    canvas.style.opacity = '0';
+    
+    document.getElementById('win-notification').classList.add('show');
+    document.getElementById('real-prize').classList.add('winner');
+    document.getElementById('prize-text').classList.add('winner');
+
+    // Confetes Clean Pink/White
+    const duration = 2000;
+    const end = Date.now() + duration;
+
+    (function frame() {
+      confetti({
+        particleCount: 5,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0, y: 0.8 },
+        colors: ['#C62B7A', '#FF9ECF', '#FFFFFF']
+      });
+      confetti({
+        particleCount: 5,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1, y: 0.8 },
+        colors: ['#C62B7A', '#FF9ECF', '#FFFFFF']
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    }());
+
+    setTimeout(() => {
+      canvas.style.display = 'none';
+      document.getElementById('cta-container').style.display = 'block';
+      startTimer();
+      setTimeout(() => {
+        document.getElementById('cta-container').scrollIntoView({ behavior: 'smooth', block: 'end' });
+      }, 200);
+    }, 400);
+  }
+
+  canvas.addEventListener('mousedown', handleStart);
+  canvas.addEventListener('mousemove', handleMove);
+  window.addEventListener('mouseup', handleEnd); 
+
+  canvas.addEventListener('touchstart', handleStart, {passive: false});
+  canvas.addEventListener('touchmove', handleMove, {passive: false});
+  window.addEventListener('touchend', handleEnd, {passive: false});
+
+  function goToSalesPage() {
+    const btn = document.querySelector('.cta-btn');
+    btn.innerHTML = '<span style="opacity:0.8">Autorizando Acesso...</span>';
+    btn.style.transform = 'scale(0.98)';
+    if (window.digikitTracking) {
+      window.digikitTracking.track('scratchcard_cta_click', {
+        destination: 'pv.html'
+      });
+    }
+    setTimeout(() => {
+      // Lê a variação do funil direto do localStorage (100% confiável)
+      var variant = '';
+      try { variant = localStorage.getItem('digikit_funnel_variant') || ''; } catch(e) {}
+      // v2    → pv-v2.html    (checkout Cakto hk4sdu5)
+      // wiapy → pv-wiapy.html (checkout Wiapy TgYgyTJK6Gnn)
+      // outro → pv.html       (checkout Cakto original)
+      if (variant === 'v2') {
+        window.location.href = 'pv-v2.html';
+      } else if (variant === 'wiapy') {
+        window.location.href = 'pv-v2.html';
+      } else {
+        window.location.href = 'pv-v2.html';
+      }
+    }, 800);
+  }
+
+  function startTimer() {
+    let timeLeft = 15 * 60; 
+    const timerDisplay = document.getElementById('timer');
+    
+    const count = setInterval(() => {
+      timeLeft--;
+      let m = Math.floor(timeLeft / 60);
+      let s = timeLeft % 60;
+      
+      m = m < 10 ? "0" + m : m;
+      s = s < 10 ? "0" + s : s;
+      
+      timerDisplay.innerHTML = `${m}:${s}`;
+      
+      if (timeLeft <= 0) clearInterval(count);
+    }, 1000);
+  }
+</script>
+</body>
+</html>
